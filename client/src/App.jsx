@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import io from 'socket.io-client';
 
-const socket = io('https://kuzgun-kart-oyunu.onrender.com/', { autoConnect: false });
+const socket = io('https://kuzgun-kart-oyunu.onrender.com', { autoConnect: false });
 
 // --- BİLEŞENLER ---
 const FaceDownCard = React.memo(({ isSelected = false, onClick = () => {} }) => (
