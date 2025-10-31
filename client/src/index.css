@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@layer base { body { @apply bg-gray-900; } }
+
+@layer components {
+  .card-animation-base {
+    @apply fixed w-20 h-28 bg-blue-800 rounded-lg border-2 border-white/50 shadow-lg z-[100] pointer-events-none;
+    transform-origin: center center;
+    will-change: transform, opacity;
+  }
+}
+
+/* Sırası gelen oyuncu için parlama efekti */
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 5px #facc15, 0 0 10px #facc15, 0 0 15px #facc15; }
+  50% { box-shadow: 0 0 10px #fde047, 0 0 20px #fde047, 0 0 30px #fde047; }
+}
+.turn-glow { animation: glow 1.5s infinite ease-in-out; }
+
+/* Kart dağıtma animasyonları */
+@keyframes deal-to-player {
+  from { top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 1; }
+  to { top: 85%; left: calc(50% + (var(--i) - 3.5) * 3rem); transform: translate(-50%, -50%) rotate(var(--r)); opacity: 1; }
+}
+.animate-deal-player { animation: deal-to-player 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+
+@keyframes deal-to-opponent {
+  from { top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 1; }
+  to { top: 15%; left: calc(50% + (var(--i) - 3.5) * 3rem); transform: translate(-50%, -50%) rotate(var(--r)); opacity: 1; }
+}
+.animate-deal-opponent { animation: deal-to-opponent 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+
+/* Kart oynama ve toplama animasyonları */
+@keyframes play-card-animation {
+  /* ESKİ: Dönerken kayboluyordu */
+  /* YENİ: Hızla hedefe uçup orada kayboluyor, aynı dağıtma efekti gibi */
+  0% {
+    transform: translate(var(--start-x), var(--start-y)) scale(1.1); /* Başlangıçta hafif büyük */
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--end-x), var(--end-y)) scale(1); /* Hedefte normal boyutta */
+    opacity: 0; /* Hedefe vardığı an kaybolur, yerini gerçek karta bırakır */
+  }
+}
+/* Daha hızlı ve "flick" hissi veren bir zamanlama fonksiyonu ekledik */
+.animate-play-card {
+  animation: play-card-animation 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Bu animasyon aynı kalabilir, gayet iyi çalışıyor. */
+@keyframes collect-cards-animation {
+  0% { transform: translate(var(--start-x), var(--start-y)) scale(1); opacity: 1; }
+  100% { transform: translate(var(--end-x), var(--end-y)) scale(0); opacity: 0; }
+}
+.animate-collect-cards { animation: collect-cards-animation 0.7s ease-in forwards; }
