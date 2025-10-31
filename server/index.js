@@ -4,7 +4,7 @@ const { Server } = require("socket.io");
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://senin-site-adin.netlify.app" // Netlify linkin
+  "https://kuzgun-kart-oyunu.netlify.app" // Netlify linkin
 ];
 
 const app = express();
